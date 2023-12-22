@@ -16,14 +16,27 @@ public class HomeMainServlet extends HttpServlet {
 		
 		response.setContentType("text/html; charset=UTF-8;");
 		
-		int inputDan = Integer.parseInt(request.getParameter("dan"));
+		String inputDan = request.getParameter("dan");
 		String inputColor = request.getParameter("color");
-		int inputLimit = Integer.parseInt(request.getParameter("limit"));
+		String inputLimit = request.getParameter("limit");
 		
-		response.getWriter().append(String.format("<div style=\"color: %s;\">== %d단 ==</div>", inputColor, inputDan));
+		if (inputDan == null || inputDan.equals("")) {
+			inputDan = "1";
+		}
+		if (inputLimit == null || inputLimit.equals("")) {
+			inputLimit = "1";
+		}
+		if (inputColor == null || inputColor.equals("")) {
+			inputColor = "black";
+		}
 		
-		for(int i=1; i<=inputLimit; i++) {
-			response.getWriter().append(String.format("<div style=\"color: %s;\">%d * %d = %d</div>", inputColor, inputDan, i, inputDan * i));
+		int inputDanToNum = Integer.parseInt(inputDan);
+		int inputLimitToNum = Integer.parseInt(inputLimit);
+		
+		response.getWriter().append(String.format("<div style=\"color: %s;\">== %d단 ==</div>", inputColor, inputDanToNum));
+		
+		for(int i=1; i<=inputLimitToNum; i++) {
+			response.getWriter().append(String.format("<div style=\"color: %s;\">%d * %d = %d</div>", inputColor, inputDanToNum, i, inputDanToNum * i));
 		}
 	}
 }

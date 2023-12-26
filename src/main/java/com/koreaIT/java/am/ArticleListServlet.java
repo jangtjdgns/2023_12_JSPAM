@@ -27,16 +27,17 @@ public class ArticleListServlet extends HttpServlet {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url = "jdbc:mysql://127.0.0.1:3306/JAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
+			String url = "jdbc:mysql://127.0.0.1:3306/JSPAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 			conn = DriverManager.getConnection(url, "root", "");
 			
 			SecSql sql = SecSql.from("SELECT * FROM article");
+			sql.append("ORDER BY id DESC");
 			
-			List<Map<String, Object>> articlesListMap = DBUtil.selectRows(conn, sql);
+			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
 			
-			for(Map<String, Object> articleMap : articlesListMap) {
-				response.getWriter().append("<div>" + articleMap.toString() + "</div>");
-			}
+			request.setAttribute("articleListMap", articleListMap);
+			
+			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");

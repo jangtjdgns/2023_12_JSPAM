@@ -16,44 +16,10 @@
 </head>
 
 <body>
-	<h1>게시물목록 v1</h1>
-	<ul>
-		<li><%= articleListMap.get(0).get("id")  %> | <%= articleListMap.get(0).get("regDate") %> | <%= articleListMap.get(0).get("title") %></li>
-		<li><%= articleListMap.get(1).get("id")  %> | <%= articleListMap.get(1).get("regDate") %> | <%= articleListMap.get(1).get("title") %></li>
-		<li><%= articleListMap.get(2).get("id")  %> | <%= articleListMap.get(2).get("regDate") %> | <%= articleListMap.get(2).get("title") %></li>
-	</ul>
-
-
-	<h1>게시물목록 v2</h1>
-	<ul>
-	<% for (int i = 0; i < 3; i++){ %>
-		<li><%= articleListMap.get(i).get("id") %> | <%= articleListMap.get(i).get("regDate") %> | <%= articleListMap.get(i).get("title") %></li>
-	<% } %>
-	</ul>
-	
-	
-	<h1>게시물목록 v3</h1>
-	<ul>
-	<% for (int i = 0; i < 3; i++){ 
-		Map<String, Object> articleMap = articleListMap.get(i);
-	%>
-		<li><%= articleMap.get("id") %> | <%= articleMap.get("regDate") %> | <%= articleMap.get("title") %></li>
-	<% } %>
-	</ul>
-	
-	<h1>게시물목록 v4</h1>
-	<ul>
-	<% for (int i = 0; i < articleListMap.size(); i++){ 
-		Map<String, Object> articleMap = articleListMap.get(i);
-	%>
-		<li><%= articleMap.get("id") %> | <%= articleMap.get("regDate") %> | <%= articleMap.get("title") %></li>
-	<% } %>
-	</ul>
-	
-	<h1>게시물목록 v5</h1>
+	<h1>게시물 목록</h1>
 	<ul>
 	<%for (Map<String, Object> articleMap : articleListMap) { %>
-		<li><%= articleMap.get("id") %> | <%= articleMap.get("regDate") %> | <%= articleMap.get("title") %></li>
+		<li><%= articleMap.get("id") %> | <%= articleMap.get("regDate") %> | <a href="../article/detail?id=<%= articleMap.get("id") %>"><%= articleMap.get("title") %></a></li>
 	<% } %>
 	</ul>
 </body>

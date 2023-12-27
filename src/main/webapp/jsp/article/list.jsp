@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -19,8 +20,11 @@
 	<h1>게시물 목록</h1>
 	<ul>
 	<%for (Map<String, Object> articleMap : articleListMap) { %>
-		<li><%= articleMap.get("id") %> | <%= articleMap.get("regDate") %> | <a href="../article/detail?id=<%= articleMap.get("id") %>"><%= articleMap.get("title") %></a></li>
+		<li><a href="../article/detail?id=<%= (int) articleMap.get("id") %>"><%= (int) articleMap.get("id") %> | <%= (LocalDateTime) articleMap.get("regDate") %> | <%= (String) articleMap.get("title") %></a></li>
 	<% } %>
 	</ul>
+	<div>
+		<a href="../home/main">메인페이지</a>
+	</div>
 </body>
 </html>

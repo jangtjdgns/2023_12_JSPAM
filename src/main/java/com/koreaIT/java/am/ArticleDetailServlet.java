@@ -20,10 +20,9 @@ public class ArticleDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8;");
 		
 		Connection conn = null;
-		String id = request.getParameter("id");
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

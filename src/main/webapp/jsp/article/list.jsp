@@ -19,9 +19,12 @@
 <body>
 	<h1>게시물 목록</h1>
 	<ul>
+	<% if(articleListMap.size() == 0) { %>
+		<li>등록된 게시물이 없습니다.</li>
+	<% } else { %>
 	<%for (Map<String, Object> articleMap : articleListMap) { %>
 		<li><a href="../article/detail?id=<%= (int) articleMap.get("id") %>"><%= (int) articleMap.get("id") %> | <%= (LocalDateTime) articleMap.get("regDate") %> | <%= (String) articleMap.get("title") %></a></li>
-	<% } %>
+	<% } } %>
 	</ul>
 	<div>
 		<a href="../home/main">메인페이지</a>

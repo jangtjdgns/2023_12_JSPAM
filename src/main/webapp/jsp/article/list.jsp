@@ -7,11 +7,13 @@
 <%
 	// 형변환 
 	List<Map<String, Object>> articleListMap = (List<Map<String, Object>>) request.getAttribute("articleListMap");
+	int curPage = (int) request.getAttribute("page");
+	int totalPageCnt = (int) request.getAttribute("totalPageCnt");
 %>
     
 <!DOCTYPE html>
-<html>
 <head>
+<html>
 <meta charset="UTF-8">
 <title>게시물목록</title>
 </head>
@@ -46,11 +48,24 @@
 			</tr>
 			<% } } %>
 		</tbody>
-
 	</table>
-
+	
 	<div>
 		<a href="../home/main">메인페이지</a>
 	</div>
+	
+	<style type="text/css">
+		.paging > .red {
+			color: red;
+			font-size: 1.25rem;
+		}
+	</style>
+	
+	<div class="paging">
+		<% for(int i = 1; i <= totalPageCnt; i++) { %>
+			<a class="<%= curPage == i ? "red" : "" %>" href="?page=<%= i %>"><%= i %></a>
+		<% } %>
+	</div>
+	
 </body>
 </html>

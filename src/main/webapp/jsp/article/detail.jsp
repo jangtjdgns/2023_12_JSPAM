@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시물 상세보기</title>
+
 </head>
 <body>
 	<h1><%= articleMap.get("id") %>번 게시물 상세보기</h1>

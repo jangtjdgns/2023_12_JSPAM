@@ -21,6 +21,9 @@
 
 <body>
 	<h1>게시물 목록</h1>
+	<div>
+		<a href="write">글쓰기</a>
+	</div>
 	<table border="1">
 		<!-- column의 길이를 지정 -->
 		<colgroup>

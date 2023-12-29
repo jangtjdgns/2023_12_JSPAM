@@ -29,3 +29,8 @@ title = '제목3',
 `body` = '내용3';
 
 SELECT * FROM article;
+
+// 두 배씩 출력
+INSERT INTO article(regDate, updateDate, title, `body`)
+SELECT NOW(), NOW(), CONCAT('제목_', RAND()), CONCAT('내용_', RAND())
+FROM article;

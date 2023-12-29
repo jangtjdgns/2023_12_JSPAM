@@ -9,6 +9,7 @@
 	List<Map<String, Object>> articleListMap = (List<Map<String, Object>>) request.getAttribute("articleListMap");
 	int curPage = (int) request.getAttribute("page");
 	int totalPageCnt = (int) request.getAttribute("totalPageCnt");
+	int itemsInAPage = (int) request.getAttribute("itemsInAPage");
 %>
     
 <!DOCTYPE html>
@@ -62,9 +63,30 @@
 	</style>
 	
 	<div class="paging">
-		<% for(int i = 1; i <= totalPageCnt; i++) { %>
+		<%
+		int from = ((curPage - 1) / itemsInAPage) * itemsInAPage + 1;
+		
+		if(from != 1) {
+		%>
+			<a href="?page=1">&lt;&lt;</a>	
+			<a href="?page=<%= from - 1 %>">&lt;</a>
+		<% }
+		int end = ((curPage - 1) / itemsInAPage + 1) * itemsInAPage;
+		end = end > totalPageCnt ? totalPageCnt : end; 
+
+		for(int i = from; i <= end; i++) {
+		%>
 			<a class="<%= curPage == i ? "red" : "" %>" href="?page=<%= i %>"><%= i %></a>
-		<% } %>
+		<% }
+		if(end != totalPageCnt){ 
+		%>
+			<a href="?page=<%= end + 1 %>">&gt;</a>
+			<a href="?page=<%= totalPageCnt %>">&gt;&gt;</a>			
+		<% }%>
+		
+		
+		
+		
 	</div>
 	
 </body>

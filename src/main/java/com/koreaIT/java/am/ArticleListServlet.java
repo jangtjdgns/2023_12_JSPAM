@@ -59,6 +59,7 @@ public class ArticleListServlet extends HttpServlet {
 			request.setAttribute("articleListMap", articleListMap);
 			request.setAttribute("page", page);
 			request.setAttribute("totalPageCnt", totalPageCnt);
+			request.setAttribute("itemsInAPage", itemsInAPage);
 			
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 			

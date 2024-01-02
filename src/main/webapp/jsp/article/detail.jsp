@@ -26,6 +26,12 @@
 			<th>작성일</th>
 			<td><%= articleMap.get("regDate") %></td>
 		</tr>
+		<% if(!articleMap.get("regDate").equals(articleMap.get("updateDate"))) { %>
+		<tr>
+			<th>수정일</th>
+			<td><%= articleMap.get("updateDate") %></td>
+		</tr>
+		<% } %>
 		<tr>
 			<th>제목</th>
 			<td><%= articleMap.get("title") %></td>
@@ -38,6 +44,7 @@
 	
 	<div>
 		<a href="list">목록</a>
+		<a href="modify?id=<%= articleMap.get("id") %>">수정</a>
 		<a href="doDelete?id=<%= articleMap.get("id") %>">삭제</a>
 	</div>
 </body>

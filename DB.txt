@@ -34,3 +34,15 @@ SELECT * FROM article;
 INSERT INTO article(regDate, updateDate, title, `body`)
 SELECT NOW(), NOW(), CONCAT('제목_', RAND()), CONCAT('내용_', RAND())
 FROM article;
+
+
+
+// ========== member table 추가
+CREATE TABLE `member`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId VARCHAR(100) NOT NULL,
+	loginPw VARCHAR(100) NOT NULL,
+	`name` VARCHAR(30) NOT NULL
+);

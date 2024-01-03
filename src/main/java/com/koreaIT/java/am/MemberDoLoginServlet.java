@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.koreaIT.java.am.config.Config;
 import com.koreaIT.java.am.util.DBUtil;
@@ -14,9 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/member/doJoin")
-public class MemberDoJoinServlet extends HttpServlet {
+@WebServlet("/member/doLogin")
+public class MemberDoLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
@@ -31,18 +33,23 @@ public class MemberDoJoinServlet extends HttpServlet {
 
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
-			String name = request.getParameter("name");
-
-			SecSql sql = SecSql.from("INSERT INTO `member`");
-			sql.append("SET regDate = NOW()");
-			sql.append(", updateDate = NOW()");
-			sql.append(", loginId = ?", loginId);
-			sql.append(", loginPw = ?", loginPw);
-			sql.append(", `name` = ?", name);
 			
-			DBUtil.insert(conn, sql);
+			SecSql sql = SecSql.from("SELECT * FROM `member`");
+			sql.append("WHERE loginId = ?", loginId);
 			
-			response.getWriter().append(String.format("<script>alert('%s님이 가입되었습니다.'); location.replace('../home/main');</script>", name));
+			Map<String, Object> memberMap = DBUtil.selectRow(conn, sql);
+			
+			if(memberMap.isEmpty()) {
+				response.getWriter().append(String.format("<script>alert('[ %s ]은(는) 존재하지 않는 아이디 입니다.'); history.back();</script>", loginId));
+				return;
+			}
+			
+			if(!memberMap.get("loginPw").equals(loginPw)) {
+				response.getWriter().append(String.format("<script>alert('비밀번호가 일치하지 않습니다.'); history.back();</script>", loginPw));
+				return;
+			}
+			
+			response.getWriter().append(String.format("<script>alert('%s님이 로그인 되었습니다.'); location.replace('../home/main');</script>", memberMap.get("name")));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");

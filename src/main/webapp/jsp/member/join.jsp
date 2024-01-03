@@ -4,51 +4,80 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script>
-	function joinSubmit(){		
-		const loginId = document.querySelector("#loginId").value.trim();
-		const loginPw = document.querySelector("#loginPw").value.trim();
-		const loginPwChk = document.querySelector("#loginPwChk").value.trim();
-		const name = document.querySelector("#name").value.trim();
-		
-		// 공백 검사
-		if (loginId == "" || loginPw == "" || loginPwChk == "" || name == "") {
-			alert("빈칸을 채워주세요.");
-			return false;
-		}
-		
-		// 비밀번호 검사
-		if(loginPw != loginPwChk) {
-			alert("비밀번호가 일치하지 않습니다.");
-			return false;
-		}
-	}
-</script>
+<title>회원가입</title>
 </head>
+
 <body>
 	<h1>회원가입</h1>
-	<form action="doJoin" method="post" onsubmit="return joinSubmit();">
+	
+	<script>
+		const joinFormSubmit = function(form){
+			// 재할당
+			form.loginId.value = form.loginId.value.trim();
+			form.loginPw.value = form.loginPw.value.trim();
+			form.loginPwChk.value = form.loginPwChk.value.trim();
+			form.name.value = form.name.value.trim();
+			
+			// 공백 검사
+			if (form.loginId.value.length == 0) {
+				alert('아이디를 입력해주세요');
+				form.loginId.focus();
+				return;
+			}
+			
+			if (form.loginPw.value.length == 0) {
+				alert('비밀번호를 입력해주세요');
+				form.loginId.focus();
+				return;
+			}
+			
+			// 비밀번호 확인 검사
+			if (form.loginPwChk.value.length == 0) {
+				alert('비밀번호 확인을 입력해주세요');
+				form.loginId.focus();
+				return;
+			}
+			
+			if (form.loginPw.value != form.loginPwChk.value) {
+				alert('비밀번호를 확인해주세요');
+				form.loginPw.value = '';
+				form.loginPwChk.value = '';
+				form.loginPw.focus();
+				return;
+			}
+			
+			if (form.name.value.length == 0) {
+				alert('이름을 입력해주세요');
+				form.loginId.focus();
+				return;
+			}
+			
+			form.submit();
+		}
+	</script>
+	
+	<form action="doJoin" method="post" onsubmit="joinFormSubmit(this); return false;">
 		<div>
-			<input id="loginId" name="loginId" type="text" placeholder="LoginId" />
+			<!-- autocomplete="off" 자동완성기능, 자동완성기능을 키고 끌수 있음 -->
+			<input type="text" name="loginId" placeholder="LoginId" />
 		</div>
 		
 		<div>
-			<input id="loginPw" name="loginPw" type="password" placeholder="Password" />
+			<input type="password" name="loginPw" placeholder="Password" />
 		</div>
 		
 		<div>
-			<input id="loginPwChk" type="password" placeholder="Confirm Password" />
+			<input type="password" name="loginPwChk" placeholder="Confirm Password" />
 		</div>
 		
 		<div>
-			<input id="name" name="name" type="text" placeholder="Username" />
+			<input type="text" name="name" placeholder="Username" />
 		</div>
-		
-		<div>
-			<button>가입</button>
-			<a href="../home/main">취소</a>
-		</div>
+		<button>가입</button>
 	</form>
+	
+	<div>
+		<a href="../home/main">메인페이지</a>
+	</div>
 </body>
 </html>

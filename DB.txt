@@ -45,5 +45,22 @@ CREATE TABLE `member`(
 	updateDate DATETIME NOT NULL,
 	loginId VARCHAR(100) NOT NULL,
 	loginPw VARCHAR(100) NOT NULL,
-	`name` VARCHAR(30) NOT NULL
+	`name` VARCHAR(100) NOT NULL
 );
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = 'test1';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = 'test2';
+
+// member 테이블 삭제
+DROP TABLE `member`;

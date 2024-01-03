@@ -5,24 +5,35 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function joinSubmit(){
+		let loginPw = document.querySelector("#loginPw").value;
+		let loginPwChk = document.querySelector("#loginPwChk").value;
+		
+		if(loginPw != loginPwChk) {
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		}
+	}
+</script>
 </head>
 <body>
 	<h1>회원가입</h1>
-	<form action="doJoin">
+	<form action="doJoin" method="post" onsubmit="return joinSubmit();">
 		<div>
-			아이디: <input name="loginId" type="text" />
+			<input name="loginId" type="text" placeholder="LoginId" />
 		</div>
 		
 		<div>
-			비밀번호: <input name="loginPw" type="password" />
+			<input id="loginPw" name="loginPw" type="password" placeholder="Password" />
 		</div>
 		
 		<div>
-			비밀번호 확인: <input type="password" />
+			<input id="loginPwChk" type="password" placeholder="Confirm Password" />
 		</div>
 		
 		<div>
-			이름: <input name="name" type="text" />
+			<input name="name" type="text" placeholder="Username" />
 		</div>
 		
 		<div>

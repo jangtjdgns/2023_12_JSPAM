@@ -28,7 +28,8 @@ updateDate = NOW(),
 title = '제목3',
 `body` = '내용3';
 
-SELECT * FROM article;
+SELECT * FROM article
+ORDER BY id DESC;
 
 // 두 배씩 출력
 INSERT INTO article(regDate, updateDate, title, `body`)

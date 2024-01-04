@@ -3,7 +3,6 @@
     pageEncoding="UTF-8"%>
 <%
     Map<String, Object> articleMap = (Map<String, Object>) request.getAttribute("articleMap");
-	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +13,9 @@
 </head>
 <body>
 	<h1><%= articleMap.get("id") %>번 게시물 상세보기</h1>
+	
+	<%@ include file="../common/topBar.jsp" %>
+	
 	<table border="1">
 		<colgroup>
 			<col />

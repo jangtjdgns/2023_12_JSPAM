@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
     Map<String, Object> articleMap = (Map<String, Object>) request.getAttribute("articleMap");
+	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 %>
 <!DOCTYPE html>
 <html>
@@ -48,8 +49,12 @@
 	
 	<div>
 		<a href="list">목록</a>
-		<a href="modify?id=<%= articleMap.get("id") %>">수정</a>
-		<a href="doDelete?id=<%= articleMap.get("id") %>" onclick="if(!confirm('정말 삭제하시겠습니까?')) return false;">삭제</a>
+		
+		<!-- 로그인 유무, 권한체크 -->
+		<% if(loginedMemberId != -1 && loginedMemberId != (int) articleMap.get("memberId")) { %>
+			<a href="modify?id=<%= articleMap.get("id") %>">수정</a>
+			<a href="doDelete?id=<%= articleMap.get("id") %>" onclick="if(!confirm('정말 삭제하시겠습니까?')) return false;">삭제</a>
+		<% } %>
 	</div>
 </body>
 </html>

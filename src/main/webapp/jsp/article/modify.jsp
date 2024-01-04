@@ -14,7 +14,6 @@
 <body>
 	<h1><%= articleMap.get("id") %>번 게시물 수정</h1>
 	<form action="doModify" method="post">
-		<!-- hidden 타입의 input은 보통 form 태그 아래에 둔다고함 (필수가 아니라 관례 정도) -->
 		<input name="id" type="hidden" value="<%= articleMap.get("id") %>"/>
 		
 		<table border="1">

@@ -15,13 +15,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/detail")
 public class ArticleDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		Connection conn = null;
 		
 		try {
@@ -40,6 +41,17 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
 			
 			request.setAttribute("articleMap", articleMap);
+			
+			// 세션 로그인 검증
+			HttpSession session = request.getSession();
+			
+			int loginedMemberId = -1;
+		
+			if(session.getAttribute("loginedMemberId") != null) {
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			}
+			
+			request.setAttribute("loginedMemberId", loginedMemberId);
 			
 			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 			

@@ -48,7 +48,7 @@ public class ArticleListServlet extends HttpServlet {
 			sql.append("FROM article A");
 			sql.append("INNER JOIN `member` M");
 			sql.append("ON A.memberId = M.id");
-			sql.append("ORDER BY A.id DESC"); // order by에도 어느 테이블의 id인지 명시해 주는것이 좋음
+			sql.append("ORDER BY A.id DESC");
 			sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
 			
 			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);

@@ -36,7 +36,8 @@
 			<tr>
 				<th>번호</th>
 				<th>작성일</th>
-				<th>제목</th>			
+				<th>제목</th>
+				<th>작성자</th>
 			</tr>		
 		</thead>
 
@@ -49,6 +50,7 @@
 				<td><%= (int) articleMap.get("id") %></td>
 				<td><%= (LocalDateTime) articleMap.get("regDate") %></td>
 				<td><a href="../article/detail?id=<%= (int) articleMap.get("id") %>"><%= (String) articleMap.get("title") %></a></td>
+				<td><%= (String) articleMap.get("writerName") %></td>
 			</tr>
 			<% } } %>
 		</tbody>

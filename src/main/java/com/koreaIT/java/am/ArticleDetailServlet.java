@@ -30,8 +30,12 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
-			SecSql sql = SecSql.from("SELECT * FROM article");
-			sql.append("WHERE id = ?", id);
+			SecSql sql = SecSql.from("SELECT A.*, M.name AS writerName");
+			sql.append("FROM article A");
+			sql.append("INNER JOIN `member` M");
+			sql.append("ON A.memberId = M.id");
+			sql.append("WHERE A.id = ?", id);
+			sql.append("ORDER BY A.id DESC");
 			
 			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
 			

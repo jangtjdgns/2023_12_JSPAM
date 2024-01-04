@@ -29,20 +29,14 @@ public class ArticleListServlet extends HttpServlet {
 			Class.forName(Config.getDBDriverName());
 			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassword());
 			
-			// 현재 페이지, 기준 값 지정
 			int page = 1;
 			
-			// 조건확인
 			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			
-			// 한 페이지의 게시물 개수
 			int itemsInAPage = 10; 
 			int limitFrom = (page - 1) * itemsInAPage;
-						
-			// %연산자를 사용해서 조건문을 추가하는 것보다
-			// double과 Math를 사용하는 것이 더 간단함
 			
 			SecSql sql = SecSql.from("SELECT COUNT(*) FROM article");
 			
@@ -50,8 +44,11 @@ public class ArticleListServlet extends HttpServlet {
 			
 			int totalPageCnt = (int) Math.ceil((double) totalCount / itemsInAPage);
 			
-			sql = SecSql.from("SELECT * FROM article");
-			sql.append("ORDER BY id DESC");
+			sql = SecSql.from("SELECT A.*, M.name AS writerName");
+			sql.append("FROM article A");
+			sql.append("INNER JOIN `member` M");
+			sql.append("ON A.memberId = M.id");
+			sql.append("ORDER BY A.id DESC"); // order by에도 어느 테이블의 id인지 명시해 주는것이 좋음
 			sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
 			
 			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);

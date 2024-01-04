@@ -29,26 +29,28 @@ public class ArticleDoWriteServlet extends HttpServlet {
 		try {
 			Class.forName(Config.getDBDriverName());
 			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassword());
-
-			// 제목, 내용 파라미터 받음
+			
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");			
 			
-			// 제목이나 내용이 빈칸일때 뒤로가기
 			if(title.trim().length() == 0 || body.trim().length() == 0) {
 				response.getWriter().append("<script>alert('빈칸을 채워주세요.'); history.back();</script>");
-			} else {
-				SecSql sql = SecSql.from("INSERT INTO article");
-				sql.append("SET regDate = NOW()");
-				sql.append(", updateDate = NOW()");
-				sql.append(", title = ?", title);
-				sql.append(", `body` = ?", body);
-				
-				int id = DBUtil.insert(conn, sql);
-				System.out.println(id);
-				
-				response.getWriter().append(String.format("<script>alert('%d번 글을 작성했습니다.'); location.replace('list');</script>", id));
+				return;
 			}
+			
+			SecSql sql = SecSql.from("INSERT INTO article");
+			sql.append("SET regDate = NOW()");
+			sql.append(", updateDate = NOW()");
+			sql.append(", title = ?", title);
+			sql.append(", `body` = ?", body);
+			sql.append(", memberId = ?", request.getSession().getAttribute("loginedMemberId"));
+			
+			
+			int id = DBUtil.insert(conn, sql);
+			System.out.println(id);
+			
+			response.getWriter().append(String.format("<script>alert('%d번 글을 작성했습니다.'); location.replace('list');</script>", id));
+			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
 		} catch (SQLException e) {

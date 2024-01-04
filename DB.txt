@@ -37,6 +37,11 @@ SELECT NOW(), NOW(), CONCAT('제목_', RAND()), CONCAT('내용_', RAND())
 FROM article;
 
 
+// memberId 칼럼 추가
+ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL;
+
+
+
 
 // ========== member table 추가
 CREATE TABLE `member`(

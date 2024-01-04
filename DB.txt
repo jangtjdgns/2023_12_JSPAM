@@ -38,7 +38,7 @@ FROM article;
 
 
 // memberId 칼럼 추가
-ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL;
+ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
 
 
 

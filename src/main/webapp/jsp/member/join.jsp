@@ -27,14 +27,14 @@
 			
 			if (form.loginPw.value.length == 0) {
 				alert('비밀번호를 입력해주세요');
-				form.loginId.focus();
+				form.loginPw.focus();
 				return;
 			}
 			
 			// 비밀번호 확인 검사
 			if (form.loginPwChk.value.length == 0) {
 				alert('비밀번호 확인을 입력해주세요');
-				form.loginId.focus();
+				form.loginPwChk.focus();
 				return;
 			}
 			
@@ -48,7 +48,7 @@
 			
 			if (form.name.value.length == 0) {
 				alert('이름을 입력해주세요');
-				form.loginId.focus();
+				form.name.focus();
 				return;
 			}
 			

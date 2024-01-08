@@ -36,18 +36,23 @@ public class ArticleListServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			
-			// 검색어 추가
 			String searchKeyword = "";
-			
-			// 검색어 null, 공백 검사
+
 			if(request.getParameter("searchKeyword") != null && request.getParameter("searchKeyword").length() != 0) {
 				searchKeyword = request.getParameter("searchKeyword");
 			}
 			
-			int itemsInAPage = 10; 
+			
+			// 한 페이지에 표시되는 게시물의 수, 기본 15개 씩
+			int itemsInAPage = 15;
+			
+			// null, 공백 검증
+			if(request.getParameter("itemsInAPage") != null && request.getParameter("itemsInAPage").length() != 0) {
+				itemsInAPage = Integer.parseInt(request.getParameter("itemsInAPage"));
+			}
+			
 			int limitFrom = (page - 1) * itemsInAPage;
 			
-			// 검색어가 포함된 게시물의 수를 가져오도록 변경
 			SecSql sql = SecSql.from("SELECT COUNT(*) FROM article");
 			sql.append("WHERE title LIKE CONCAT('%', ? ,'%')", searchKeyword);
 			

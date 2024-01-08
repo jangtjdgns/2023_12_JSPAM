@@ -71,29 +71,39 @@
 	
 	<div class="paging">
 		<%
-		int from = ((curPage - 1) / itemsInAPage) * itemsInAPage + 1;
+		int from = ((curPage - 1) / 10) * 10 + 1;
 		
 		if(from != 1) {
 		%>
-			<a href="?page=1&searchKeyword=<%= searchKeyword %>">&lt;&lt;</a>	
-			<a href="?page=<%= from - 1 %>&searchKeyword=<%= searchKeyword %>">&lt;</a>
+			<a href="?page=1&searchKeyword=<%= searchKeyword %>&itemsInAPage=<%= itemsInAPage %>">&lt;&lt;</a>	
+			<a href="?page=<%= from - 1 %>&searchKeyword=<%= searchKeyword %>&itemsInAPage=<%= itemsInAPage %>">&lt;</a>
 		<% }
-		int end = ((curPage - 1) / itemsInAPage + 1) * itemsInAPage;
+		int end = ((curPage - 1) / 10 + 1) * 10;
 		end = end > totalPageCnt ? totalPageCnt : end; 
 
 		for(int i = from; i <= end; i++) {
 		%>
-			<a class="<%= curPage == i ? "red" : "" %>" href="?page=<%= i %>&searchKeyword=<%= searchKeyword %>"><%= i %></a>
+			<a class="<%= curPage == i ? "red" : "" %>" href="?page=<%= i %>&searchKeyword=<%= searchKeyword %>&itemsInAPage=<%= itemsInAPage %>"><%= i %></a>
 		<% }
 		if(end != totalPageCnt){ 
 		%>
-			<a href="?page=<%= end + 1 %>&searchKeyword=<%= searchKeyword %>">&gt;</a>
-			<a href="?page=<%= totalPageCnt %>&searchKeyword=<%= searchKeyword %>">&gt;&gt;</a>			
+			<a href="?page=<%= end + 1 %>&searchKeyword=<%= searchKeyword %>&itemsInAPage=<%= itemsInAPage %>">&gt;</a>
+			<a href="?page=<%= totalPageCnt %>&searchKeyword=<%= searchKeyword %>&itemsInAPage=<%= itemsInAPage %>">&gt;&gt;</a>			
 		<% }%>
 	</div>
 	
 	<div>
 		<form action="list" method="get">
+			<select name="itemsInAPage">
+				<% 
+					int[] itemsInAPages = {5, 10, 15, 20, 30, 40, 50};
+					for (int i = 0; i < itemsInAPages.length; i++) {
+				%>
+					<option value="<%= itemsInAPages[i] %>" <%= itemsInAPages[i] == itemsInAPage ? "selected" : "" %>><%= itemsInAPages[i] %>개씩</option>
+				<%
+					}
+				%>
+			</select>
 			<input type="text" name="searchKeyword" placeholder="검색" value="<%= searchKeyword %>"/>
 			<button>검색</button>
 		</form>

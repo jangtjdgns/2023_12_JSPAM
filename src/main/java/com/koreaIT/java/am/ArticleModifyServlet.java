@@ -37,6 +37,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
 			
 			if (articleMap.isEmpty()) {
+				response.setContentType("text/html; charset=UTF-8;");
 				response.getWriter().append(String.format("<script>alert('%d번 게시물은 존재하지 않습니다'); location.replace('list');</script>", id));
 				return;
 			}
@@ -50,11 +51,13 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			}
 
 			if (loginedMemberId == -1) {
+				response.setContentType("text/html; charset=UTF-8;");
 				response.getWriter().append("<script>alert('로그인 후 이용해주세요'); location.replace('../member/login');</script>");
 				return;
 			}
 
 			if ((int) articleMap.get("memberId") != loginedMemberId) {
+				response.setContentType("text/html; charset=UTF-8;");
 				response.getWriter().append(String.format("<script>alert('해당 게시물에 대한 권한이 없습니다'); location.replace('detail?id=%d');</script>", id));
 				return;
 			}

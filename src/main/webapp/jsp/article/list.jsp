@@ -1,6 +1,7 @@
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
+<%@page import="com.koreaIT.java.am.util.Util"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -49,10 +50,10 @@
 			<% } else { %>
 			<%for (Map<String, Object> articleMap : articleListMap) { %>
 			<tr>
-				<td><%= (int) articleMap.get("id") %></td>
-				<td><%= (LocalDateTime) articleMap.get("regDate") %></td>
-				<td><a href="../article/detail?id=<%= (int) articleMap.get("id") %>"><%= (String) articleMap.get("title") %></a></td>
-				<td><%= (String) articleMap.get("writerName") %></td>
+				<td><%= articleMap.get("id") %></td>
+				<td><%= Util.formatDateTime((LocalDateTime) articleMap.get("regDate")) %></td>
+				<td><a href="../article/detail?id=<%= (int) articleMap.get("id") %>"><%= articleMap.get("title") %></a></td>
+				<td><%= articleMap.get("writerName") %></td>
 			</tr>
 			<% } } %>
 		</tbody>

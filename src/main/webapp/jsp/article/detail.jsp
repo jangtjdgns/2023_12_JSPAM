@@ -1,4 +1,6 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.Map"%>
+<%@page import="com.koreaIT.java.am.util.Util"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -27,12 +29,12 @@
 		</tr>
 		<tr>
 			<th>작성일</th>
-			<td><%= articleMap.get("regDate") %></td>
+			<td><%= Util.formatDateTime((LocalDateTime) articleMap.get("regDate")) %></td>
 		</tr>
 		<% if(!articleMap.get("regDate").equals(articleMap.get("updateDate"))) { %>
 		<tr>
 			<th>수정일</th>
-			<td><%= articleMap.get("updateDate") %></td>
+			<td><%= Util.formatDateTime((LocalDateTime) articleMap.get("updateDate")) %></td>
 		</tr>
 		<% } %>
 		<tr>
@@ -53,7 +55,7 @@
 		<a href="list">목록</a>
 		
 		<!-- 로그인 유무, 권한체크 -->
-		<% if(loginedMemberId != -1 && loginedMemberId != (int) articleMap.get("memberId")) { %>
+		<% if(loginedMemberId != -1 && loginedMemberId == (int) articleMap.get("memberId")) { %>
 			<a href="modify?id=<%= articleMap.get("id") %>">수정</a>
 			<a href="doDelete?id=<%= articleMap.get("id") %>" onclick="if(!confirm('정말 삭제하시겠습니까?')) return false;">삭제</a>
 		<% } %>

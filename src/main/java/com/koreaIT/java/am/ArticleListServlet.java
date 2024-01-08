@@ -36,10 +36,20 @@ public class ArticleListServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			
+			// 검색어 추가
+			String searchKeyword = "";
+			
+			// 검색어 null, 공백 검사
+			if(request.getParameter("searchKeyword") != null && request.getParameter("searchKeyword").length() != 0) {
+				searchKeyword = request.getParameter("searchKeyword");
+			}
+			
 			int itemsInAPage = 10; 
 			int limitFrom = (page - 1) * itemsInAPage;
 			
+			// 검색어가 포함된 게시물의 수를 가져오도록 변경
 			SecSql sql = SecSql.from("SELECT COUNT(*) FROM article");
+			sql.append("WHERE title LIKE CONCAT('%', ? ,'%')", searchKeyword);
 			
 			int totalCount = DBUtil.selectRowIntValue(conn, sql);
 			
@@ -49,6 +59,7 @@ public class ArticleListServlet extends HttpServlet {
 			sql.append("FROM article A");
 			sql.append("INNER JOIN `member` M");
 			sql.append("ON A.memberId = M.id");
+			sql.append("WHERE A.title LIKE CONCAT('%', ?, '%')", searchKeyword);	// SQL 쿼리에 검색어 조건 추가
 			sql.append("ORDER BY A.id DESC");
 			sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
 			
@@ -67,6 +78,7 @@ public class ArticleListServlet extends HttpServlet {
 			request.setAttribute("page", page);
 			request.setAttribute("totalPageCnt", totalPageCnt);
 			request.setAttribute("itemsInAPage", itemsInAPage);
+			request.setAttribute("searchKeyword", searchKeyword);	// jsp로 넘김
 			
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 			

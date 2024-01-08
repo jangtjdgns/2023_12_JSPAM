@@ -51,7 +51,6 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			
 			
 			int id = DBUtil.insert(conn, sql);
-			System.out.println(id);
 			
 			response.getWriter().append(String.format("<script>alert('%d번 글을 작성했습니다.'); location.replace('list');</script>", id));
 			
